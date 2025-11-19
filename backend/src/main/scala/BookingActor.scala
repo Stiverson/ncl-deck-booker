@@ -15,10 +15,10 @@ object BookingActor {
 
 
   def apply(): Behavior[Command] = registry(Map(
-    "101" -> "LIVRE",
-    "102" -> "LIVRE",
-    "103" -> "OCUPADA", 
-    "104" -> "LIVRE"
+  
+    "A-101" -> "AVAILABLE", "A-102" -> "AVAILABLE", "A-103" -> "BOOKED", "A-104" -> "AVAILABLE",
+    "B-201" -> "AVAILABLE", "B-202" -> "BOOKED", "B-203" -> "AVAILABLE", "B-204" -> "AVAILABLE",
+    "C-301" -> "BOOKED", "C-302" -> "AVAILABLE", "C-303" -> "AVAILABLE", "C-304" -> "BOOKED"
   ))
 
  
