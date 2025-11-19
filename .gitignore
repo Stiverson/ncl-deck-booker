@@ -1,0 +1,19 @@
+# Scala / sbt
+target/
+project/target/
+.bsp/
+.scala-build/
+
+# Node / Vue
+node_modules/
+dist/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+.DS_Store
