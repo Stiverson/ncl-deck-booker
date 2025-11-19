@@ -3,17 +3,36 @@ import axios from 'axios'
 
 export const useCabinStore = defineStore('cabin', {
   state: () => ({
-    cabins: {}, 
+    cabins: {},
     loading: false,
     error: null,
-    currentUser: 'Stiverson'
+    currentUser: null 
   }),
 
   actions: {
+ 
+    login(username) {
+      this.currentUser = username
+    },
+
+    logout() {
+      this.currentUser = null
+    },
+
+    async resetSimulation() {
+      try {
+        await axios.post('/api/reset')
+        await this.fetchCabins() 
+        return true
+      } catch (err) {
+        console.error(err)
+        return false
+      }
+    },
+
     async fetchCabins() {
       this.loading = true
       try {
-   
         const response = await axios.get('/api/cabins')
         this.cabins = response.data.cabins
       } catch (err) {
@@ -25,20 +44,24 @@ export const useCabinStore = defineStore('cabin', {
     },
 
     async bookCabin(cabinId) {
+      if (!this.currentUser) return 
+
       try {
+       
         const response = await axios.post('/api/book', {
           cabinId: cabinId,
           userId: this.currentUser
         })
 
         if (response.data.success) {
-          alert(`Sucesso: ${response.data.message}`)
-          await this.fetchCabins() 
+        
+          await this.fetchCabins()
+          return { success: true, message: response.data.message }
         } else {
-          alert(`Falha: ${response.data.message}`)
+          return { success: false, message: response.data.message }
         }
       } catch (err) {
-        alert('Erro de conexão com o servidor.')
+        return { success: false, message: 'Server error' }
       }
     }
   }

@@ -1,29 +1,28 @@
 # 🛳️ NCL Deck Booker - POC
 
-Proof of Concept (POC) developed to demonstrate a **Real-time Cabin Booking System** using the **Actor Model** for high concurrency and a reactive Frontend.
+A Full-Stack Proof of Concept (POC) demonstrating a **Real-time Cabin Booking System** designed for high concurrency using the **Actor Model**.
+
+> **Goal:** Simulate a high-demand cruise reservation environment where race conditions are prevented by design.
+
+## 🌟 Key Features
+* **Real-time Booking:** Prevents double-booking using Akka Actors' sequential mailbox processing.
+* **Smart Booking:** "Quick Book" logic that automatically assigns the best available cabin by category (VIP, Standard, Economy).
+* **Session Management:** Simulated User Authentication (Login/Logout) with Pinia.
+* **Simulation Control:** Admin controls to Reset the entire deck state instantly.
 
 ## 🚀 Tech Stack
 
-### Backend (The Core)
+### Backend (Scala & Akka)
 * **Language:** Scala 2.13
-* **Framework:** Akka HTTP & Akka Actors (Typed)
-* **Architecture:** Actor Model (Stateful in-memory management for race-condition free bookings)
+* **Core:** Akka Actors (Typed) for state management.
+* **API:** Akka HTTP for REST endpoints.
+* **Architecture:** Reactive, Non-blocking, In-memory state.
 
-### Frontend (The Client)
-* **Framework:** Vue 3 (Composition API)
-* **State Management:** Pinia
-* **Build Tool:** Vite
-* **HTTP Client:** Axios
-* **Styling:** CSS 3 (Custom Responsive Grid)
-
-## 🧠 Why this Architecture?
-
-Traditional MVC architectures often struggle with race conditions in high-demand scenarios (like thousands of users trying to book the same cabin simultaneously).
-
-By using **Akka Actors**, requests are processed sequentially in a mailbox, ensuring data consistency without complex database locks. This POC demonstrates:
-1.  **State Isolation:** Each actor manages its own state.
-2.  **Non-blocking I/O:** Leveraging Akka HTTP for high throughput.
-3.  **Reactive UI:** Vue 3 updates instantly based on backend responses.
+### Frontend (Vue 3)
+* **Framework:** Vue 3 (Composition API).
+* **State:** Pinia Store.
+* **Build:** Vite.
+* **Styling:** Custom CSS (Responsive & Nautical Theme).
 
 ## 🛠️ How to Run
 
@@ -31,16 +30,18 @@ By using **Akka Actors**, requests are processed sequentially in a mailbox, ensu
 ```bash
 cd backend
 sbt run
-# Server will start at http://localhost:8081
+# Server starts at http://localhost:8081
 
 2. Start Frontend (Vue)
 
 cd frontend
 npm install
 npm run dev
-# Client will start at http://localhost:5173
+# Client starts at http://localhost:5173
 
-🧪 API Endpoints
-GET /api/cabins - List all cabin statuses.
+API Endpoints
+GET /api/cabins - Fetch deck status.
 
-POST /api/book - Attempt to book a cabin.
+POST /api/book - Book a cabin (User ID required).
+
+POST /api/reset - Reset simulation state.
